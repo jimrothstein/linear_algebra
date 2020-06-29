@@ -1,0 +1,94 @@
+---
+title: "0001_first.rmd" 
+output: 
+  pdf_document:
+    latex_engine: xelatex
+    toc:  TRUE
+    toc_depth:  1
+fontsize: 12pt
+geometry: margin=0.5in,top=0.25in
+#  md_document:
+#  html_document:
+#    toc: true
+#  	toc_float: true
+#    css: styles.css
+---
+
+---
+LINEAR ALEBRA
+---
+
+
+```{r setup, include=FALSE		}
+knitr::opts_chunk$set(echo = TRUE,  comment="      ##",  error=TRUE, collapse=TRUE)
+```
+
+```{r library, include=FALSE} 
+here()
+library(tibble)
+```
+
+```{r render, eval=FALSE, echo=FALSE	}
+p  <- fs::path()
+w  <- fs::path_wd()
+w
+here()
+file="0000_NOTES.Rmd"
+dir=""
+
+ren_pdf(file,dir)
+ren_github(file, dir)
+
+#knitr::knit_exit()
+
+# To Render
+ren_pdf  <- function(file, dir) {
+rmarkdown::render(
+									here( dir, file), 
+									output_dir="~/Downloads/print_and_delete") 
+}
+ren_pdf(file, dir)
+
+ren_github  <- function(file, dir) {
+rmarkdown::render(
+									here(dir, file) 
+									output_format="github_document",
+									output_dir="~/Downloads/print_and_delete") 
+}
+ren_github(file, dir)
+```
+
+
+```{r}
+here()
+
+## pain-in-ass
+#devtools::create("../algebra")
+#devtools::create(path="../pkg_linear_algebra" )
+```
+
+```{r 2.1_code}
+# http://www.bendixcarstensen.com/
+t  <- tribble(
+						 ~x, ~y,
+						 1.0, 3.7,	
+						 2.0, 4.2,
+						 3.0, 4.9,
+						 4.0, 5.7,
+						 5.0, 6.0
+						 )
+
+t
+
+library(ggplot2)
+ggplot(t, aes(x=x, y=y)) +
+	geom_point()
+
+
+
+```
+
+
+
+
+
