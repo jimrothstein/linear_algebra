@@ -26,15 +26,29 @@ knitr::opts_chunk$set(echo = TRUE,  comment="      ##",  error=TRUE, collapse=TR
 ```{r library, include=FALSE} 
 here()
 library(tibble)
+library("matlib")
+devtools::install_github("friendly/matlib") #build_vignettes=TRUE )
+
+
+
 ```
+```{r pkg_install, eval=FALSE	, include=FALSE	 }
+
+# default location IS .libPaths()[[1]]
+# source ?  see /tmp/Rt...../downloaded_packages   (deleted at end of sesssion)
+install.packages(pkgs="matlib", verbose=TRUE, keep_outputs=TRUE,
+								 lib=.libPaths()[[1]] )  
+.libPaths()
+```
+
 
 ```{r render, eval=FALSE, echo=FALSE	}
 p  <- fs::path()
 w  <- fs::path_wd()
 w
 here()
-file="0000_NOTES.Rmd"
-dir=""
+file="0001_first.rmd"
+dir="rmd"
 
 ren_pdf(file,dir)
 ren_github(file, dir)
@@ -84,9 +98,79 @@ library(ggplot2)
 ggplot(t, aes(x=x, y=y)) +
 	geom_point()
 
+# almost a line,  
+# but impossible to find B, such y=XB
+```
+
+
+```{r crossprod}
+# "crossprod " this is statical term, not geometric
+#  :=   T(a) %*% a
+
+# Examples:
+a  <- c(1, 0)
+b   <- c(0, 1)
+crossprod(a)  # T(a) a
+crossprod(a,b) # T(a) b
+
+A  <- matrix(c(1,3,2,4), nrow=2)
+A
+crossprod(A)
+
+
+a  <- c(1,2,3)
+b   <- c(4,5,6)
+
+# inner product
+a %*% b
+
+
+# default  b is column matrix (3 x 1)
+# t(a) is now row (1 x 3)
+# b t(a)
+b %*% t(a)  
+
+# (3 x 1)  (1 x 3)
+a %*% t(b)
+
+# 1x3   3x1   -> inner prodcut
+t(b) %*% a
+
+
+k
+```
+
+Modify the problem, to y=XB (but B_hat is approx)
+```{r}
+x  <- t$x
+y   <- t$y
+
+# solve for Betas, using LSE formula
+crossprod
 
 
 ```
+
+```{r col_means}
+A  <-  matrix(c(1,2,3,4,5,6), nrow=3)
+A
+
+I  <- c(1,1,1)
+mean  <- (1/3)*I %*% A
+mean
+
+y  <- c(1,2,3,4,5)
+mean  <- (1/length(y)) * c(rep(1, length(y))) %*% y
+mean
+sd(y)
+var(y)
+
+y  <- y -mean
+z  <- (1/(length(y)-1))*crossprod(y)
+z
+
+```
+
 
 
 

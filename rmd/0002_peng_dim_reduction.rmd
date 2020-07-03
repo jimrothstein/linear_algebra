@@ -1,0 +1,155 @@
+q--
+title: "/home/jim/code/pkg_linear_algebra/rmd/0002_peng_dim_reduction.rmd" 
+output: 
+  pdf_document:
+    latex_engine: xelatex
+    toc:  TRUE
+    toc_depth:  1
+fontsize: 12pt
+geometry: margin=0.5in,top=0.25in
+#  md_document:
+#  html_document:
+#    toc: true
+#  	toc_float: true
+#    css: styles.css
+---
+
+---
+DIMENSIONAL REDUCTION
+---
+
+
+```{r setup, include=FALSE		}
+knitr::opts_chunk$set(echo = TRUE,  comment="      ##",  error=TRUE, collapse=TRUE)
+```
+
+```{r library, include=FALSE} 
+here()
+library(tibble)
+library(matlib)
+library(ggplot2)
+#devtools::install_github("friendly/matlib") #build_vignettes=TRUE )
+```
+
+```{r pkg_install, eval=FALSE	, include=FALSE	 }
+
+# default location IS .libPaths()[[1]]
+# source ?  see /tmp/Rt...../downloaded_packages   (deleted at end of sesssion)
+install.packages(pkgs="matlib", verbose=TRUE, keep_outputs=TRUE,
+								 lib=.libPaths()[[1]] )  
+.libPaths()
+```
+
+
+```{r render, eval=FALSE, echo=FALSE	}
+p  <- fs::path()
+w  <- fs::path_wd()
+w
+here()
+file="/home/jim/code/pkg_linear_algebra/rmd/0002_peng_dim_reduction.rmd"
+dir="rmd"
+
+ren_pdf(file,dir)
+ren_github(file, dir)
+
+#knitr::knit_exit()
+
+# To Render
+ren_pdf  <- function(file, dir) {
+rmarkdown::render(
+									here( dir, file), 
+									output_dir="~/Downloads/print_and_delete") 
+}
+ren_pdf(file, dir)
+
+ren_github  <- function(file, dir) {
+rmarkdown::render(
+									here(dir, file) 
+									output_format="github_document",
+									output_dir="~/Downloads/print_and_delete") 
+}
+ren_github(file, dir)
+```
+
+
+```{r}
+here()
+
+## pain-in-ass
+#devtools::create("../algebra")
+#devtools::create(path="../pkg_linear_algebra" )
+```
+
+```{r twins}
+
+set.seed(100)
+n <- 100
+lim <- c(60,78)
+# multivarible 
+X <- MASS::mvrnorm(n, c(69,69), 
+          matrix(c(9,9*0.92,9*0.92,9*1),2,2))
+head(X)
+```
+
+```{r plot}
+plot(X, xlab = "twin height 1", 
+     ylab = "twin height 2")
+points(X[1:2,], col="red", pch=16)
+lines(X[1:2,], col="red")
+
+library(ggplot2)
+ggplot(X, aes(x = X[,1], y=X[,2])) +
+	geom_point()
+
+
+```
+Pick 2 points, find distance
+```{r dist}
+a <- X[1,]
+b <- X[2,]
+sqrt(sum((a-b)^2)) # euclidean distance
+
+
+# compute dist between rows
+d=dist(X, method = "euclidean")
+str(d)
+
+
+# 1st 5 rows
+as.matrix(d)[1:5,2:5]
+```
+```{r scale}
+# subtract col means (not scaling) distance unchanged
+X <- scale(X, center=TRUE, scale=FALSE)
+d=dist(X, method = "euclidean")
+as.matrix(d)[1:5,2:5]
+```
+
+```{r plo2}
+par(mfrow=c(1,2))
+
+# copare distance between twins:  TRUE dist vs dist with single variable
+# 1st twin
+Z <- X[,1]
+plot(dist(X), dist(Z), 
+     xlab = "actual distance", 
+     ylab = "Using only first X column")
+abline(0,1, col = 2)
+
+Z <-X[,2]
+plot(dist(X), dist(Z), 
+     xlab = "actual distance", 
+     ylab = "Using only second X column")
+abline(0,1, col = 2)
+```
+
+
+```{r matlib}
+
+A <- matrix(c(1, 2, -1, 2), 2, 2)
+b <- c(2,1)
+showEqn(A, b)
+
+plotEqn(A,b)
+```
+
