@@ -1,5 +1,7 @@
+
 ---
-title: Template for .Rmd
+#title:  "r knitr::current_input(dir=FALSE	)" 
+#title:  `r knitr::current_input(dir=FALSE	)` 
 output: 
   pdf_document:
     latex_engine: xelatex
@@ -15,26 +17,42 @@ geometry: margin=0.5in,top=0.25in
 ---
 
 ---
-NOTES ONLY
+TODO -- replace title, dir etc with R expressions
+comments
+.
+
+/home/jim/.config/nvim/templates/skeleton.Rmd
+comments
 ---
 
-
-
-
+<!--  commments -->
+inline code 
+ `r knitr::current_input(dir=FALSE	)`
 ```{r setup, include=FALSE		}
 knitr::opts_chunk$set(echo = TRUE,  comment="      ##",  error=TRUE, collapse=TRUE)
+
 ```
 
 ```{r library, include=FALSE} 
 here()
 ```
 
+# only work through knitr
+```{r file_name_here}
+here()
+here(knitr::current_input(dir=FALSE	 ))
+```
+
+```{r file_name_knitr}
+knitr::current_input(dir= FALSE	 )
+knitr::current_input(dir= TRUE 	 )
+```
 ```{r render, eval=FALSE, echo=FALSE	}
 p  <- fs::path()
 w  <- fs::path_wd()
 w
 here()
-file="0000_NOTES.Rmd"
+file=basename("/home/jim/code/pkg_linear_algebra/0001_tst.Rmd")
 dir=""
 
 ren_pdf(file,dir)
@@ -59,19 +77,6 @@ rmarkdown::render(
 ren_github(file, dir)
 ```
 
-
-```{r}
-here()
-
-## pain-in-ass
-#devtools::create("../algebra")
-#devtools::create(path="../pkg_linear_algebra" )
-```
-
-```{r 12JUL}
-upgraded to R 4.0.x
-now reinstalling various pkgs, working on pkg matlib
-```
 
 
 
