@@ -68,9 +68,12 @@ here()
 #devtools::create(path="../pkg_linear_algebra" )
 ```
 
+```{r 12JUL}
+upgraded to R 4.0.x
+now reinstalling various pkgs, working on pkg matlib
+```
 
 
 
-creat separate repo 
-creat separate repo '
-lslinear_algebra' 
+
+
