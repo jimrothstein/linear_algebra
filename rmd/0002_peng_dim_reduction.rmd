@@ -28,7 +28,9 @@ here()
 library(tibble)
 library(matlib)
 library(ggplot2)
+library(MASS)
 #devtools::install_github("friendly/matlib") #build_vignettes=TRUE )
+
 ```
 
 ```{r pkg_install, eval=FALSE	, include=FALSE	 }
@@ -73,7 +75,6 @@ ren_github(file, dir)
 ```
 
 ```{r twins}
-
 set.seed(100)
 n <- 100
 lim <- c(60,78)
@@ -81,6 +82,7 @@ lim <- c(60,78)
 X <- MASS::mvrnorm(n, c(69,69), 
           matrix(c(9,9*0.92,9*0.92,9*1),2,2))
 head(X)
+dim(X)
 ```
 
 ```{r plot}
@@ -104,19 +106,25 @@ sqrt(sum((a-b)^2)) # euclidean distance
 
 # compute dist between rows
 d=dist(X, method = "euclidean")
+typeof(d)  # double
+dim(d)
 str(d)
 
 
 # 1st 5 rows
 as.matrix(d)[1:5,2:5]
 ```
+if n=100,  dist will yield 100x100 matrix.
 ```{r scale}
 # subtract col means (not scaling) distance unchanged
 X <- scale(X, center=TRUE, scale=FALSE)
 d=dist(X, method = "euclidean")
-as.matrix(d)[1:5,2:5]
+as.matrix(d)[1:5,1:5]
 ```
 
+BIAS
+Compare TRUE (Euclidean) distance between twins vs 
+estimator distance using 1st twin of each pair.
 ```{r plo2}
 par(mfrow=c(1,2))
 
@@ -134,6 +142,25 @@ plot(dist(X), dist(Z),
      ylab = "Using only second X column")
 abline(0,1, col = 2)
 ```
+
+REMOVE Bias, average contributions of each twin to dist(X)
+```{r}
+# much better fit!
+
+Z <- X[,1]
+
+par(mfrow=c(1,1))
+plot(dist(X)/sqrt(2), dist(Z), 
+     xlab = "actual distance", 
+     ylab = "Using only first X column with scaling factor")
+abline(0,1, col = 2)
+```
+
+Using just twin 1 as estimtor
+```{r corr}
+cor(dist(X)/sqrt(2), dist(Z))
+```
+
 
 
 ```{r matlib}
