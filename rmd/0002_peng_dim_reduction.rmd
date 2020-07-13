@@ -35,6 +35,7 @@ library(ggplot2)
 
 # default location IS .libPaths()[[1]]
 # source ?  see /tmp/Rt...../downloaded_packages   (deleted at end of sesssion)
+
 install.packages(pkgs="matlib", verbose=TRUE, keep_outputs=TRUE,
 								 lib=.libPaths()[[1]] )  
 .libPaths()
@@ -45,8 +46,8 @@ install.packages(pkgs="matlib", verbose=TRUE, keep_outputs=TRUE,
 p  <- fs::path()
 w  <- fs::path_wd()
 w
-here()
-file="/home/jim/code/pkg_linear_algebra/rmd/0002_peng_dim_reduction.rmd"
+
+file="0002_peng_dim_reduction.rmd"
 dir="rmd"
 
 ren_pdf(file,dir)
@@ -69,15 +70,6 @@ rmarkdown::render(
 									output_dir="~/Downloads/print_and_delete") 
 }
 ren_github(file, dir)
-```
-
-
-```{r}
-here()
-
-## pain-in-ass
-#devtools::create("../algebra")
-#devtools::create(path="../pkg_linear_algebra" )
 ```
 
 ```{r twins}
