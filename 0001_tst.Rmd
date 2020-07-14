@@ -1,7 +1,12 @@
-
 ---
+# NONE of folloiwng work!
+#title:  "`r print('jim')`"
 #title:  "r knitr::current_input(dir=FALSE	)" 
 #title:  `r knitr::current_input(dir=FALSE	)` 
+# author: '`r paste0("jim")` '
+# author: "`r paste0('jim')` "
+# author: "`r print('jim')` "
+#author: `r paste0("jim")` 
 output: 
   pdf_document:
     latex_engine: xelatex
@@ -37,7 +42,6 @@ knitr::opts_chunk$set(echo = TRUE,  comment="      ##",  error=TRUE, collapse=TR
 here()
 ```
 
-# only work through knitr
 ```{r file_name_here}
 here()
 here(knitr::current_input(dir=FALSE	 ))
